@@ -3,7 +3,9 @@ package dev.scastillo.ecommerce.user.infrastructure.repository;
 import dev.scastillo.ecommerce.user.domain.model.User;
 import dev.scastillo.ecommerce.user.domain.repository.UserRepository;
 import lombok.AllArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Repository;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 import java.util.UUID;
@@ -21,7 +23,7 @@ public class JpaUserRepository implements UserRepository {
     @Override
     public User findById(UUID id) {
         return repository.findById(id)
-                .orElseThrow(() -> new RuntimeException("User not found with id: " + id));
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found with id: " + id));
     }
 
     @Override
@@ -37,5 +39,9 @@ public class JpaUserRepository implements UserRepository {
     @Override
     public User findByEmail(String email) {
         return repository.findByEmail(email).orElseThrow(() -> new RuntimeException("User not found with email: " + email));
+    }
+    @Override
+    public void deleteAll() {
+        repository.deleteAll();
     }
 }

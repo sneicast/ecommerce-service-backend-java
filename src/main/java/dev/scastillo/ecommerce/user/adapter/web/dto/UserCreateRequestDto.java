@@ -1,12 +1,12 @@
 package dev.scastillo.ecommerce.user.adapter.web.dto;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 @Getter
 @Setter
 @AllArgsConstructor
+@NoArgsConstructor
+@Builder
 public class UserCreateRequestDto {
     private String firstName;
     private String lastName;
