@@ -1,0 +1,7 @@
+{
+  "firstName": "demo",
+  "lastName": "second",
+  "email": "demo@example.com",
+  "status": false,
+  "passwordHash": "hash123"
+}

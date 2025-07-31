@@ -11,4 +11,5 @@ public interface UserRepository {
     User save(User user);
     void deleteById(UUID id);
     User findByEmail(String email);
+    void deleteAll();
 }
