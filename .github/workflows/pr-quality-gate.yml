@@ -62,9 +62,10 @@ jobs:
     steps:
       - name: SonarCloud Quality Gate Check
         uses: SonarSource/sonarcloud-github-action@v2
+        env:
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         with:
-          projectKey: sneicast_ecommerce-service-backend-java
-          organization: sneicast
-          sonarToken: ${{ secrets.SONAR_TOKEN }}
-
-  jobs:
+          args: >
+            -Dsonar.projectKey=sneicast_ecommerce-service-backend-java
+            -Dsonar.organization=sneicast
+            -Dsonar.host.url=https://sonarcloud.io
