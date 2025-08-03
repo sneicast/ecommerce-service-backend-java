@@ -66,5 +66,3 @@ jobs:
           projectKey: sneicast_ecommerce-service-backend-java
           organization: sneicast
           sonarToken: ${{ secrets.SONAR_TOKEN }}
-
-  jobs:
