@@ -31,12 +31,10 @@ public class ProductController {
             @RequestParam(required = false) String title,
             @RequestParam(required = false) Boolean available
     ) {
-        if( title == null && available == null) {
-            return productService.searchProducts("", true).stream()
-                    .map(productMapper::toDto)
-                    .toList();
-        }
-        return productService.searchProducts(title, available).stream()
+        String searchTitle = title != null ? title : "";
+        Boolean searchAvailable = available != null ? available : true;
+
+        return productService.searchProducts(searchTitle, searchAvailable).stream()
                 .map(productMapper::toDto)
                 .toList();
     }
