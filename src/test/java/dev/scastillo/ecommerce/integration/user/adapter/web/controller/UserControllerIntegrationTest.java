@@ -1,6 +1,7 @@
 package dev.scastillo.ecommerce.integration.user.adapter.web.controller;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import dev.scastillo.ecommerce.shared.utils.JwtUtil;
 import dev.scastillo.ecommerce.user.adapter.web.dto.UserCreateRequestDto;
 import dev.scastillo.ecommerce.user.adapter.web.dto.UserDto;
 import dev.scastillo.ecommerce.user.adapter.web.dto.UserUpdateRequestDto;
@@ -38,16 +39,28 @@ public class UserControllerIntegrationTest {
     @Autowired
     private UserRepository userRepository;
 
+    @Autowired
+    private JwtUtil jwtUtil;
+
     @BeforeEach
     void setUp() {
         userRepository.deleteAll();
     }
 
+    private final UUID USER_ID_MOCK = UUID.randomUUID();
+
+    private String generateToken(UUID userId) {
+        return jwtUtil.generateToken(userId);
+    }
+
     @Test
     void shouldCreateUserAndPersistInDatabase() throws Exception {
+        String token = jwtUtil.generateToken(USER_ID_MOCK);
         UserCreateRequestDto request = TestDataFactory.loadCreateUserRequestMock();
 
+
         mockMvc.perform(post("/api/v1/users")
+                        .header("Authorization", "Bearer " + generateToken(USER_ID_MOCK))
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(request)))
                 .andExpect(status().isOk());
@@ -67,6 +80,7 @@ public class UserControllerIntegrationTest {
     @Test
     void shouldReturnEmptyListWhenNoUsersExist() throws Exception {
         mockMvc.perform(get("/api/v1/users")
+                        .header("Authorization", "Bearer " + generateToken(USER_ID_MOCK))
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.length()").value(0));
@@ -82,6 +96,7 @@ public class UserControllerIntegrationTest {
         userRepository.save(user2);
 
         MvcResult result = mockMvc.perform(get("/api/v1/users")
+                        .header("Authorization", "Bearer " + generateToken(USER_ID_MOCK))
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andReturn();
@@ -104,6 +119,7 @@ public class UserControllerIntegrationTest {
         userRepository.save(user);
 
         MvcResult result = mockMvc.perform(get("/api/v1/users/" + user.getId())
+                        .header("Authorization", "Bearer " + generateToken(USER_ID_MOCK))
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andReturn();
@@ -120,6 +136,7 @@ public class UserControllerIntegrationTest {
         UUID randomId = UUID.randomUUID();
 
         mockMvc.perform(get("/api/v1/users/" + randomId)
+                        .header("Authorization", "Bearer " + generateToken(USER_ID_MOCK))
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isNotFound());
     }
@@ -135,6 +152,7 @@ public class UserControllerIntegrationTest {
 
         // Act: realiza la petición PUT
         MvcResult result = mockMvc.perform(put("/api/v1/users/" + user.getId())
+                        .header("Authorization", "Bearer " + generateToken(USER_ID_MOCK))
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(updateRequest)))
                 .andExpect(status().isOk())
@@ -154,6 +172,7 @@ public class UserControllerIntegrationTest {
         UserUpdateRequestDto updateRequest = TestDataFactory.loadUpdateUserRequestMock();
 
         mockMvc.perform(put("/api/v1/users/" + randomId)
+                        .header("Authorization", "Bearer " + generateToken(USER_ID_MOCK))
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(updateRequest)))
                 .andExpect(status().isNotFound());
@@ -166,7 +185,8 @@ public class UserControllerIntegrationTest {
         userRepository.save(user);
 
         // Act & Assert: elimina el usuario
-        mockMvc.perform(delete("/api/v1/users/" + user.getId()))
+        mockMvc.perform(delete("/api/v1/users/" + user.getId())
+                        .header("Authorization", "Bearer " + generateToken(USER_ID_MOCK)))
                 .andExpect(status().isOk());
 
         // Verifica que ya no existe en la base de datos

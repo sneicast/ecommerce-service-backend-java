@@ -1,5 +1,6 @@
 package dev.scastillo.ecommerce.product.adapter.web.controller;
 
+import dev.scastillo.ecommerce.product.adapter.web.dto.IncrementStockRequestDto;
 import dev.scastillo.ecommerce.product.adapter.web.dto.ProductCreateRequestDto;
 import dev.scastillo.ecommerce.product.adapter.web.dto.ProductDto;
 import dev.scastillo.ecommerce.product.adapter.web.dto.ProductUpdateRequestDto;
@@ -51,5 +52,10 @@ public class ProductController {
     @DeleteMapping("/{id}")
     public void deleteProduct(@PathVariable Integer id) {
         productService.deleteProduct(id);
+    }
+
+    @PostMapping("/{id}/increment-stock")
+    public void incrementStock(@PathVariable Integer id, @RequestBody IncrementStockRequestDto request ) {
+        productService.incrementStock(id, request.getQuantity());
     }
 }

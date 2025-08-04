@@ -51,6 +51,15 @@ public class JpaProductStockRepository implements ProductStockRepository {
     }
 
     @Override
+    public Integer incrementStock(Integer productId, Integer quantity) {
+        ProductStock productStock = repository.findByProductId(productId)
+                .orElseThrow(() -> new NotFoundException("No fue encontrado el stock del producto con ID: " + productId));
+        productStock.setQuantity(productStock.getQuantity() + quantity);
+        repository.save(productStock);
+        return productStock.getQuantity();
+    }
+
+    @Override
     public void deleteAll() {
         repository.deleteAll();
     }

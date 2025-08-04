@@ -6,6 +6,7 @@ import dev.scastillo.ecommerce.product.adapter.web.dto.ProductDto;
 import dev.scastillo.ecommerce.product.domain.model.Product;
 import dev.scastillo.ecommerce.product.domain.repository.ProductRepository;
 import dev.scastillo.ecommerce.product.domain.repository.ProductStockRepository;
+import dev.scastillo.ecommerce.shared.utils.JwtUtil;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,7 +16,9 @@ import org.springframework.http.MediaType;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
 
+import java.math.BigDecimal;
 import java.util.List;
+import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -40,10 +43,19 @@ public class ProductControllerIntegrationTest {
     @Autowired
     private ProductStockRepository productStockRepository;
 
+    @Autowired
+    private JwtUtil jwtUtil;
+
     @BeforeEach
     void setUp() {
         productRepository.deleteAll();
         productStockRepository.deleteAll();
+    }
+
+    private final UUID USER_ID_MOCK = UUID.randomUUID();
+
+    private String generateToken(UUID userId) {
+        return jwtUtil.generateToken(userId);
     }
 
     @Test
@@ -57,6 +69,7 @@ public class ProductControllerIntegrationTest {
 
         // Envía la petición y obtiene la respuesta como DTO
         String response = mockMvc.perform(post("/api/v1/products")
+                        .header("Authorization", "Bearer " + generateToken(USER_ID_MOCK))
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(request)))
                 .andExpect(status().isOk())
@@ -85,21 +98,22 @@ public class ProductControllerIntegrationTest {
         Product product1 = new Product();
         product1.setTitle("Zapato");
         product1.setDescription("Zapato deportivo");
-        product1.setPrice(50.0);
+        product1.setPrice(new BigDecimal(50.0));
         product1.setAvailable(true);
         productRepository.save(product1);
 
         Product product2 = new Product();
         product2.setTitle("Camisa");
         product2.setDescription("Camisa formal");
-        product2.setPrice(30.0);
+        product2.setPrice(new BigDecimal(30.0));
         product2.setAvailable(false);
         productRepository.save(product2);
 
         // Realiza la petición GET con filtro por título y disponibilidad
         String response = mockMvc.perform(get("/api/v1/products")
                         .param("title", "Zapato")
-                        .param("available", "true"))
+                        .param("available", "true")
+                        .header("Authorization", "Bearer " + generateToken(USER_ID_MOCK)))
                 .andExpect(status().isOk())
                 .andReturn()
                 .getResponse()
@@ -126,12 +140,13 @@ public class ProductControllerIntegrationTest {
         Product product = new Product();
         product.setTitle("Producto Test");
         product.setDescription("Descripción de prueba");
-        product.setPrice(100.0);
+        product.setPrice(new BigDecimal(100.0));
         product.setAvailable(true);
         product = productRepository.save(product);
 
         // Realizar petición GET al endpoint
-        String response = mockMvc.perform(get("/api/v1/products/" + product.getId()))
+        String response = mockMvc.perform(get("/api/v1/products/" + product.getId())
+                        .header("Authorization", "Bearer " + generateToken(USER_ID_MOCK)))
                 .andExpect(status().isOk())
                 .andReturn()
                 .getResponse()

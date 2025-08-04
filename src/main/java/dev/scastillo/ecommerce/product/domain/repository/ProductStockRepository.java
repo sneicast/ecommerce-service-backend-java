@@ -10,5 +10,6 @@ public interface ProductStockRepository {
     void decreaseStock(Integer productId, Integer quantity);
     Integer getStockByProductId(Integer productId);
     void deleteStockByProductId(Integer productId);
+    Integer incrementStock(Integer productId, Integer quantity);
     void deleteAll();
 }

@@ -57,4 +57,9 @@ public class ProductServiceImpl implements ProductService {
     public void deleteProduct(Integer id) {
         productRepository.deleteById(id);
     }
+
+    @Override
+    public void incrementStock(Integer productId, Integer quantity) {
+        productStockRepository.incrementStock(productId, quantity);
+    }
 }

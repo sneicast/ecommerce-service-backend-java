@@ -8,6 +8,7 @@ import dev.scastillo.ecommerce.product.domain.repository.ProductStockRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.math.BigDecimal;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
@@ -103,7 +104,7 @@ public class ProductServiceImplTest {
                 .title("Old Title")
                 .description("Old Desc")
                 .imageUrl("old.jpg")
-                .price(100.0)
+                .price(new BigDecimal(100.0))
                 .available(false)
                 .build();
 
@@ -111,7 +112,7 @@ public class ProductServiceImplTest {
                 .title("New Title")
                 .description("New Desc")
                 .imageUrl("new.jpg")
-                .price(150.0)
+                .price(new BigDecimal(150.0))
                 .available(true)
                 .build();
 
@@ -123,7 +124,7 @@ public class ProductServiceImplTest {
         assertEquals("New Title", result.getTitle());
         assertEquals("New Desc", result.getDescription());
         assertEquals("new.jpg", result.getImageUrl());
-        assertEquals(150.0, result.getPrice());
+        assertEquals(new BigDecimal(150.0), result.getPrice());
         assertTrue(result.isAvailable());
         verify(productRepository, times(1)).findById(1);
         verify(productRepository, times(1)).save(existingProduct);
