@@ -23,3 +23,7 @@ security:
   password:
     encoder:
       strength: 12
+
+jwt:
+  secret: "mi_super_secreto_extremadamente_largo_1234567890"
+  expiration: 3600 # segundos (por ejemplo, 1 hora)

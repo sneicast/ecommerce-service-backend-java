@@ -10,5 +10,6 @@ public interface ProductService {
     Product createProduct(Product product, Integer stockQuantity);
     Product updateProduct(Integer id, Product product);
     void deleteProduct(Integer id);
+    void incrementStock(Integer productId, Integer quantity);
 
 }

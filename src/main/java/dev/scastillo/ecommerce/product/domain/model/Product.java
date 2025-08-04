@@ -5,6 +5,7 @@ import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
+import java.math.BigDecimal;
 import java.time.OffsetDateTime;
 @Entity
 @Table(name = "products")
@@ -28,7 +29,7 @@ public class Product {
     private String imageUrl;
 
     @Column(nullable = false)
-    private double price;
+    private BigDecimal price;
 
     @Column(nullable = false)
     private boolean available;
@@ -43,4 +44,7 @@ public class Product {
 
     @OneToOne(cascade = CascadeType.ALL, mappedBy = "product", fetch = FetchType.LAZY)
     private ProductStock stock;
+
+//    @OneToMany(mappedBy = "product")
+//    private List<OrderItem> orderItems;
 }
