@@ -124,6 +124,12 @@ mvn test
 mvn test jacoco:report
 ```
 
+## 🔗 Frontend
+
+Este frontend funciona en conjunto con el Frontend desarrollado en Angular 20:
+- **Repositorio**: [ecommerce-service-frontend-angular](https://github.com/sneicast/ecommerce-service-frontend-angular)
+
+
 ## Arquitectura Hexagonal
 
 Este proyecto implementa la **Arquitectura Hexagonal** (también conocida como Arquitectura de Puertos y Adaptadores), que proporciona:
