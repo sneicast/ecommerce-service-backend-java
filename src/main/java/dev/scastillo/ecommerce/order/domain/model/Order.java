@@ -24,9 +24,6 @@ public class Order {
     @GeneratedValue
     private BigInteger id;
 
-//    @Column(name = "customer_id", nullable = false)
-//    private UUID customerId;
-
     @ManyToOne
     @JoinColumn(name = "customer_id", nullable = false)
     private Customer customer;

@@ -4,6 +4,8 @@ import dev.scastillo.ecommerce.customer.domain.model.Customer;
 import dev.scastillo.ecommerce.customer.domain.service.CustomerService;
 import dev.scastillo.ecommerce.order.domain.model.Order;
 import dev.scastillo.ecommerce.order.domain.model.OrderItem;
+import dev.scastillo.ecommerce.order.domain.model.TopCustomerPurchasesResponse;
+import dev.scastillo.ecommerce.order.domain.model.TopProductSalesResponse;
 import dev.scastillo.ecommerce.order.domain.repository.OrderItemRepository;
 import dev.scastillo.ecommerce.order.domain.repository.OrderRepository;
 import dev.scastillo.ecommerce.order.domain.service.OrderService;
@@ -80,6 +82,16 @@ public class OrderServiceImpl implements OrderService {
         }
         return orderOptional.get();
        // return orderRepository.findOrderById(orderId);
+    }
+
+    @Override
+    public List<TopProductSalesResponse> findTopProductsBySales(int limit) {
+        return orderItemRepository.findTopProductsBySales(limit);
+    }
+
+    @Override
+    public List<TopCustomerPurchasesResponse> findTopCustomersByOrders(int limit) {
+        return orderRepository.findTopCustomersByOrders(limit);
     }
 
     private void decreaseStockForOrderItems(List<OrderItem> orderItems) {
