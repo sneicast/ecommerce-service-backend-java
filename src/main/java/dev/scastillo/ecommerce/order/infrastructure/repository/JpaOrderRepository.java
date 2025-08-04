@@ -4,7 +4,6 @@ import dev.scastillo.ecommerce.order.domain.model.Order;
 import dev.scastillo.ecommerce.order.domain.model.TopCustomerPurchasesResponse;
 import dev.scastillo.ecommerce.order.domain.repository.OrderRepository;
 import lombok.AllArgsConstructor;
-import org.aspectj.weaver.ast.Or;
 import org.springframework.stereotype.Repository;
 
 import java.math.BigInteger;
