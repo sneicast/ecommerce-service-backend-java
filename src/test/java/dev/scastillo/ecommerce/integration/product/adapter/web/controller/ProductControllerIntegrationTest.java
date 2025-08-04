@@ -16,6 +16,7 @@ import org.springframework.http.MediaType;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.UUID;
 
@@ -97,14 +98,14 @@ public class ProductControllerIntegrationTest {
         Product product1 = new Product();
         product1.setTitle("Zapato");
         product1.setDescription("Zapato deportivo");
-        product1.setPrice(50.0);
+        product1.setPrice(new BigDecimal(50.0));
         product1.setAvailable(true);
         productRepository.save(product1);
 
         Product product2 = new Product();
         product2.setTitle("Camisa");
         product2.setDescription("Camisa formal");
-        product2.setPrice(30.0);
+        product2.setPrice(new BigDecimal(30.0));
         product2.setAvailable(false);
         productRepository.save(product2);
 
@@ -139,7 +140,7 @@ public class ProductControllerIntegrationTest {
         Product product = new Product();
         product.setTitle("Producto Test");
         product.setDescription("Descripción de prueba");
-        product.setPrice(100.0);
+        product.setPrice(new BigDecimal(100.0));
         product.setAvailable(true);
         product = productRepository.save(product);
 
