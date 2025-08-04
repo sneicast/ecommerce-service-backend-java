@@ -19,19 +19,11 @@ public class OrderItem {
     @GeneratedValue
     private BigInteger id;
 
-//    @Column(name = "order_id", nullable = false)
-//    private BigInteger orderId;
-
     @ManyToOne
-//    @MapsId
     @JoinColumn(name = "order_id", nullable = false)
     private Order order;
 
-//    @Column(name = "product_id", nullable = false)
-//    private Integer productId;
-
     @ManyToOne
-//    @MapsId
     @JoinColumn(name = "product_id", nullable = false)
     private Product product;
 

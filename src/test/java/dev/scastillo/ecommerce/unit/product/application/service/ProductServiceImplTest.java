@@ -35,22 +35,22 @@ public class ProductServiceImplTest {
         Product product2 = Product.builder().id(2).title("Prod2").build();
         List<Product> products = Arrays.asList(product1, product2);
 
-        when(productRepository.findAll()).thenReturn(products);
+        when(productRepository.findByFilters(anyString(), anyString())).thenReturn(products);
 
-        List<Product> result = productService.searchProducts("Prod", true);
+        List<Product> result = productService.searchProducts("Prod", "true");
 
         assertEquals(products, result);
-        verify(productRepository, times(1)).findAll();
+        verify(productRepository, times(1)).findByFilters(anyString(), anyString());
     }
 
     @Test
     void searchProducts_returnsEmptyList() {
-        when(productRepository.findAll()).thenReturn(Collections.emptyList());
+        when(productRepository.findByFilters(anyString(), anyString())).thenReturn(Collections.emptyList());
 
-        List<Product> result = productService.searchProducts("Prod", false);
+        List<Product> result = productService.searchProducts("Prod", "false");
 
         assertTrue(result.isEmpty());
-        verify(productRepository, times(1)).findAll();
+        verify(productRepository, times(1)).findByFilters(anyString(), anyString());
     }
 
     @Test

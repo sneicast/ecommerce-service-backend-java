@@ -19,6 +19,12 @@ public class JpaProductRepository implements ProductRepository {
     }
 
     @Override
+    public List<Product> findByFilters(String title, String available) {
+        return repository.findByFilters(title, available);
+    }
+
+
+    @Override
     public Optional<Product> findById(Integer id) {
         return repository.findById(id);
     }

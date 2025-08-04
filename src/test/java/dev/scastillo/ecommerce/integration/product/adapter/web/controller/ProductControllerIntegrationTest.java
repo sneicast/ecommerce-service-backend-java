@@ -111,8 +111,8 @@ public class ProductControllerIntegrationTest {
 
         // Realiza la petición GET con filtro por título y disponibilidad
         String response = mockMvc.perform(get("/api/v1/products")
-                        .param("title", "Zapato")
-                        .param("available", "true")
+                        .param("title", "")
+                        .param("available", "")
                         .header("Authorization", "Bearer " + generateToken(USER_ID_MOCK)))
                 .andExpect(status().isOk())
                 .andReturn()

@@ -30,12 +30,10 @@ public class ProductController {
     @GetMapping
     public List<ProductDto> searchProducts(
             @RequestParam(required = false) String title,
-            @RequestParam(required = false) Boolean available
+            @RequestParam(required = false) String available
     ) {
-        String searchTitle = title != null ? title : "";
-        Boolean searchAvailable = available != null ? available : true;
 
-        return productService.searchProducts(searchTitle, searchAvailable).stream()
+        return productService.searchProducts(title, available).stream()
                 .map(productMapper::toDto)
                 .toList();
     }

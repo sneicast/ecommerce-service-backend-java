@@ -16,6 +16,9 @@ public interface OrderMapper {
     @Mapping(source = "customer.id", target = "customerId")
     @Mapping(target = "customerName", expression = "java(customerFullname(order.getCustomer()))")
     @Mapping(source = "customer.phoneNumber", target = "customerPhone")
+    @Mapping(source = "promotion.id", target = "promotionId")
+    @Mapping(source = "promotion.name", target = "promotionName")
+    @Mapping(source = "promotion.globalDiscountPercentage", target = "discountPercentage")
     OrderDto toDto(Order order);
 
 

@@ -22,6 +22,11 @@ public class OrderDto {
     private String customerPhone;
     private OffsetDateTime orderDate;
     private BigDecimal totalAmount;
+    private BigDecimal discountAmount;
+    private BigDecimal finalAmount;
+    private UUID promotionId;
+    private String promotionName;
+    private BigInteger discountPercentage;
     private User createdBy;
     private String createdByName;
     private OrderItemDto[] items;
