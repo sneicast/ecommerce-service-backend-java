@@ -20,8 +20,10 @@ public class ProductServiceImpl implements ProductService {
     private final ProductStockRepository productStockRepository;
 
     @Override
-    public List<Product> searchProducts(String title, boolean available) {
-        return productRepository.findAll();
+    public List<Product> searchProducts(String title, String available) {
+
+        //return productRepository.findAll();
+        return  productRepository.findByFilters(title, available);
     }
 
     @Override

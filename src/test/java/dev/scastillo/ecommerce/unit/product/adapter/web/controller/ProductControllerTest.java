@@ -53,14 +53,14 @@ public class ProductControllerTest {
         var domainProduct = mock(Product.class);
         var productDto = mock(ProductDto.class);
 
-        when(productService.searchProducts("test", false)).thenReturn(List.of(domainProduct));
+        when(productService.searchProducts("test", "false")).thenReturn(List.of(domainProduct));
         when(productMapper.toDto(domainProduct)).thenReturn(productDto);
 
-        List<ProductDto> result = productController.searchProducts("test", false);
+        List<ProductDto> result = productController.searchProducts("test", "false");
 
         assertEquals(1, result.size());
         assertEquals(productDto, result.get(0));
-        verify(productService).searchProducts("test", false);
+        verify(productService).searchProducts("test", "false");
         verify(productMapper).toDto(domainProduct);
     }
 
@@ -69,14 +69,14 @@ public class ProductControllerTest {
         var domainProduct = mock(Product.class);
         var productDto = mock(ProductDto.class);
 
-        when(productService.searchProducts("", true)).thenReturn(List.of(domainProduct));
+        when(productService.searchProducts("", "true")).thenReturn(List.of(domainProduct));
         when(productMapper.toDto(domainProduct)).thenReturn(productDto);
 
         List<ProductDto> result = productController.searchProducts(null, null);
 
         assertEquals(1, result.size());
         assertEquals(productDto, result.get(0));
-        verify(productService).searchProducts("", true);
+        verify(productService).searchProducts("", "true");
         verify(productMapper).toDto(domainProduct);
     }
 

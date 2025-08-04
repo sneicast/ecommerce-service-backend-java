@@ -5,7 +5,7 @@ import dev.scastillo.ecommerce.product.domain.model.Product;
 import java.util.List;
 
 public interface ProductService {
-    List<Product> searchProducts(String title, boolean available);
+    List<Product> searchProducts(String title, String available);
     Product getProductById(Integer id);
     Product createProduct(Product product, Integer stockQuantity);
     Product updateProduct(Integer id, Product product);

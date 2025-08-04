@@ -1,6 +1,8 @@
 package dev.scastillo.ecommerce.order.domain.model;
 
 import dev.scastillo.ecommerce.customer.domain.model.Customer;
+import dev.scastillo.ecommerce.promotion.adapter.web.dto.PromotionDto;
+import dev.scastillo.ecommerce.promotion.domain.model.Promotion;
 import dev.scastillo.ecommerce.user.domain.model.User;
 import jakarta.persistence.*;
 import lombok.*;
@@ -10,7 +12,6 @@ import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.time.OffsetDateTime;
 import java.util.List;
-import java.util.UUID;
 
 @Entity
 @Table(name = "orders")
@@ -42,4 +43,12 @@ public class Order {
 
     @OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
     private List<OrderItem> items;
+
+    private BigDecimal discountAmount;
+    private BigDecimal finalAmount;
+
+    @ManyToOne
+    @JoinColumn(name = "promotion_id", nullable = true)
+    private Promotion promotion;
+
 }

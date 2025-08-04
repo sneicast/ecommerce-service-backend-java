@@ -37,7 +37,7 @@ public class ProductServiceImplTest {
 
         when(productRepository.findAll()).thenReturn(products);
 
-        List<Product> result = productService.searchProducts("Prod", true);
+        List<Product> result = productService.searchProducts("Prod", "true");
 
         assertEquals(products, result);
         verify(productRepository, times(1)).findAll();
@@ -47,7 +47,7 @@ public class ProductServiceImplTest {
     void searchProducts_returnsEmptyList() {
         when(productRepository.findAll()).thenReturn(Collections.emptyList());
 
-        List<Product> result = productService.searchProducts("Prod", false);
+        List<Product> result = productService.searchProducts("Prod", "false");
 
         assertTrue(result.isEmpty());
         verify(productRepository, times(1)).findAll();
