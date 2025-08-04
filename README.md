@@ -88,6 +88,16 @@ export DB_USER=dev_user
    - `DB_PORT=5432`
    - `DB_USER=dev_user`
 
+## Cargar Usuario de prueba
+Comparto el insert de un usuario de prueba para facilitar el inicio de sesion en el sistema. 
+Puedes ejecutar este script SQL directamente en tu base de datos PostgreSQL para crear un usuario inicial.:
+email: `sneider@example.com`
+password: `123456`
+```sql
+INSERT INTO public.users (id,created_at,email,first_name,last_name,password_hash,status,updated_at) VALUES
+	 ('7ee24d6e-0fd6-41e5-b27a-c11551ae1c8b'::uuid,'2025-08-03 07:15:16.794332-05','sneider@example.com','Sneider','C','$2a$12$FoeCHi0VZvw.C6Kh056GdObhqIPTUaROSM/Caw//blUNwQYp6NBri',true,'2025-08-03 07:15:16.794384-05');
+```
+
 ## Ejecutar el Proyecto
 
 ### 1. Compilar el proyecto
